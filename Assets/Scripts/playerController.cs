@@ -30,12 +30,9 @@ public class playerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2(moveInput.x * walkSpeed + Time.fixedDeltaTime, rb.velocity.y);
-    }
-
-    void OnAttack()
-    {
-
+        //Debug.Log($"Move Input: {moveInput}, Velocity: {new Vector2(moveInput.x * walkSpeed, rb.velocity.y)}");
+        rb.velocity = new Vector2(moveInput.x * walkSpeed, rb.velocity.y);
+        //* Time.fixedDeltaTime
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -43,6 +40,7 @@ public class playerController : MonoBehaviour
         moveInput = context.ReadValue<Vector2>();
 
         IsMoving = moveInput != Vector2.zero;
+        Debug.Log($"OnMove called. Move Input: {moveInput}, IsMoving: {IsMoving}");
     }
 
 }
