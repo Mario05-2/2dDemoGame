@@ -149,6 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 5
+  _isMoving: 0
+  _isRunning: 0
 --- !u!114 &5226934563434589425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,6 +240,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: bbe923e2-4d57-47ca-abd7-5a4a9ec5c861
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8244930113027605692}
+        m_TargetAssemblyTypeName: playerController, Assembly-CSharp
+        m_MethodName: OnRun
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 007fe2d6-29cc-4bcf-a71a-a7c126a78324
+    m_ActionName: Player/Run[/Keyboard/leftShift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
