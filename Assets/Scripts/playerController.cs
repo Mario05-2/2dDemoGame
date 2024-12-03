@@ -20,12 +20,14 @@ public class playerController : MonoBehaviour
         private set
         {
             _isMoving = value;
-            animator.SetBool("isMoving?", value);
+            animator.SetBool(AnimationStrings.isMoving, value);
         } 
     }
 
-    [SerializeField]
+    /*[SerializeField]
     private bool _isRunning = false;
+
+    Can use if I get a running animation
 
     public bool IsRunning
     {
@@ -36,15 +38,16 @@ public class playerController : MonoBehaviour
         set
         {
             _isRunning = value;
-            animator.SetBool("isRunning?", value);
+            animator.SetBool(AnimationStrings.isRunning, value);
         }
-    }
+    } */
 
     public bool _isFacingRight = true;
 
     public bool IsFacingRight { get { return _isFacingRight;}  private set {
         if(_isFacingRight != value)
         {
+            //Flip the local scale to make the player face the opposite direction
             transform.localScale *= new Vector2(-1, 1);
         }
 
@@ -76,6 +79,8 @@ public class playerController : MonoBehaviour
         //Debug.Log($"Move Input: {moveInput}, Velocity: {new Vector2(moveInput.x * walkSpeed, rb.velocity.y)}");
         rb.velocity = new Vector2(moveInput.x * walkSpeed, rb.velocity.y);
         //* Time.fixedDeltaTime
+
+        animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -102,8 +107,10 @@ public class playerController : MonoBehaviour
         }
     }
 
-    public void OnRun(InputAction.CallbackContext context)
+    /*public void OnRun(InputAction.CallbackContext context)
     {
+        can use if I get running animation
+
         IsRunning = context.ReadValueAsButton();{}
         {
             if (context.started)
@@ -116,5 +123,5 @@ public class playerController : MonoBehaviour
 
 
         }
-    }
+    } */
 }
