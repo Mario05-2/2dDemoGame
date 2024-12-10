@@ -138,6 +138,10 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   groundDistance: 0.05
+  wallDistance: 0.2
+  ceilingDistance: 0.05
+  _isOnWall: 0
+  _isOnCeiling: 0
   _isGrounded: 0
 --- !u!50 &8031151603390401936
 Rigidbody2D:
@@ -179,6 +183,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 5
+  airWalkSpeed: 3
+  jumpImpulse: 10
   _isMoving: 0
   _isFacingRight: 1
 --- !u!114 &5226934563434589425
@@ -227,7 +233,19 @@ MonoBehaviour:
     m_ActionId: fa0b0aef-bf90-4026-adf9-56865ae505a6
     m_ActionName: Player/Look[/Mouse/delta,/Pen/delta]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8244930113027605692}
+        m_TargetAssemblyTypeName: playerController, Assembly-CSharp
+        m_MethodName: OnAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 1c625da3-3755-411e-b5dc-e22f454cb027
     m_ActionName: Player/Attack[/Mouse/leftButton]
   - m_PersistentCalls:
@@ -286,6 +304,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 007fe2d6-29cc-4bcf-a71a-a7c126a78324
     m_ActionName: Player/Run[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0ae91190-b1a6-4ce7-96f1-b7e82fa7f240
+    m_ActionName: Player/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

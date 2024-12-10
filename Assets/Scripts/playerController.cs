@@ -5,11 +5,52 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(touchingDirections))]
 public class playerController : MonoBehaviour
 {
     public float walkSpeed = 5f;
     Vector2 moveInput;
+    public float airWalkSpeed = 3f;
+    public float jumpImpulse = 10f;
+    touchingDirections TouchingDirections;
+
+    //movement stops when hitting the wall
+   public float CurrentMoveSpeed
+{
+    get
+    {
+        if (TouchingDirections.IsGrounded)
+        {
+            if (CanMove)
+            {
+                if (IsMoving && !TouchingDirections.IsOnWall)
+                {
+                    return walkSpeed;
+                }
+                else
+                {
+                    return walkSpeed; // Return walkSpeed as the default value
+                }
+            }
+            else
+            {
+                // Movement locked
+                return 0;
+            }
+        }
+        else // AirState checks
+        {
+            if (IsMoving && !TouchingDirections.IsOnWall)
+            {
+                return airWalkSpeed;
+            }
+            else
+            {
+                return airWalkSpeed; // Return airWalkSpeed as the default value
+            }
+        }
+    }
+}
 
     [SerializeField]
     private bool _isMoving = false;
@@ -54,6 +95,11 @@ public class playerController : MonoBehaviour
         _isFacingRight = value;
     }}
 
+    public bool CanMove {get
+    {
+        return animator.GetBool(AnimationStrings.canMove);
+    }}
+
     Rigidbody2D rb;
     Animator animator; 
 
@@ -61,6 +107,7 @@ public class playerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        TouchingDirections = GetComponent<touchingDirections>();
     }
     // Start is called before the first frame update
     void Start()
@@ -104,6 +151,24 @@ public class playerController : MonoBehaviour
         {
             //Face the left
             IsFacingRight = false;
+        }
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if(context.started && TouchingDirections.IsGrounded && CanMove)
+        {
+            animator.SetTrigger(AnimationStrings.jumpTrigger);
+            rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
+        }
+    }
+
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        if(context.started)
+        {
+           animator.SetTrigger("attack");
+           Debug.Log("Attack!");
         }
     }
 
