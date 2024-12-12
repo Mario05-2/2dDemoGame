@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 3982078014297758992}
   - component: {fileID: 4304852092592809664}
   - component: {fileID: 6490218658983408223}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SkeletonEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,8 +244,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.16309118, y: 2.0424485}
-  m_Size: {x: 1.8713017, y: 2.1059885}
+  m_Offset: {x: -0.16309118, y: 1.9825323}
+  m_Size: {x: 1.8713017, y: 2.225822}
   m_Direction: 0
 --- !u!114 &903359940886733761
 MonoBehaviour:
@@ -325,7 +325,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6479666317420065344}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2bb077226a436640998e8ed3253b8f7, type: 3}
   m_Name: 

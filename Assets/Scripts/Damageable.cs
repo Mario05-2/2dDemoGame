@@ -56,12 +56,11 @@ public class Damageable : MonoBehaviour
         }
         set
         {
-            IsAlive = value;
+            _isAlive = value;
             animator.SetBool(AnimationStrings.isAlive, value);
             Debug.Log("IsAlive: " + value);
-
-            Hit(0, Vector2.zero);
         }
+        
     }
 
     private void Awake()
@@ -82,11 +81,12 @@ public class Damageable : MonoBehaviour
 
             timeSinceHit += Time.deltaTime;
         }
+        Hit(10);  
 
         
     }   
 
-   public bool Hit(int damage, Vector2 knockback)
+   public bool Hit(int damage)
     {
         if(IsAlive && !isInvincible)
         {

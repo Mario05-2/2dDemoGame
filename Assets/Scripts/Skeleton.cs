@@ -80,10 +80,11 @@ public class Skeleton : MonoBehaviour
         rb.velocity = new Vector2(walkSpeed * walkDirectionVector.x, rb.velocity.y);
 
         if(CanMove)
-        //come back to this
+        //come back to this (main reason why the skeleton is not moving)
             rb.velocity = new Vector2(walkSpeed * walkDirectionVector.x, rb.velocity.y);
         else
-            rb.velocity = new Vector2(0, rb.velocity.y);    
+            //rb.velocity = new Vector2(0, rb.velocity.y);
+            rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x, 0, walkStopRate), rb.velocity.y);
     }
 
     private void FlipDirection()

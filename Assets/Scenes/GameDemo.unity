@@ -56741,6 +56741,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 903359940886733761, guid: 7203cb2af109d9245934f0be2e9a549d, type: 3}
+      propertyPath: walkSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 903359940886733761, guid: 7203cb2af109d9245934f0be2e9a549d, type: 3}
+      propertyPath: walkStopRate
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 3914520677522057791, guid: 7203cb2af109d9245934f0be2e9a549d, type: 3}
       propertyPath: m_Size.x
       value: 1.6839823
@@ -56791,7 +56799,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5856291947441004341, guid: 7203cb2af109d9245934f0be2e9a549d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.29
+      value: 9.54
       objectReference: {fileID: 0}
     - target: {fileID: 5856291947441004341, guid: 7203cb2af109d9245934f0be2e9a549d, type: 3}
       propertyPath: m_LocalPosition.y
