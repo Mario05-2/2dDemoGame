@@ -418,6 +418,12 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 1
     m_Controller: {fileID: 9100000}
+  - m_Name: isAlive
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -696,9 +702,6 @@ AnimatorStateMachine:
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: 7721780953187172233}
-    second:
-    - {fileID: -4347489764299786944}
   - first: {fileID: -5365408570608151415}
     second:
     - {fileID: 793031518285269503}
@@ -707,6 +710,9 @@ AnimatorStateMachine:
   - first: {fileID: 8085012942997109906}
     second:
     - {fileID: 2415997856466607987}
+  - first: {fileID: 7721780953187172233}
+    second:
+    - {fileID: -4347489764299786944}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
   m_EntryPosition: {x: 50, y: 120, z: 0}
@@ -751,7 +757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5703b7daa6c416b4eb98bc0cc8a43eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boolName: 
+  boolName: canMove?
   updateOnState: 0
   updateOnStateMachine: 1
   valueOnEnter: 0

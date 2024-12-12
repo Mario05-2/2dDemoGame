@@ -15,27 +15,20 @@ public class playerController : MonoBehaviour
     touchingDirections TouchingDirections;
 
     //movement stops when hitting the wall
-   public float CurrentMoveSpeed
+    public float CurrentMoveSpeed
 {
     get
     {
-        if (TouchingDirections.IsGrounded)
+        if (IsMoving && !TouchingDirections.IsGrounded)
         {
-            if (CanMove)
+            if (!CanMove)
             {
-                if (IsMoving && !TouchingDirections.IsOnWall)
-                {
-                    return walkSpeed;
-                }
-                else
-                {
-                    return walkSpeed; // Return walkSpeed as the default value
-                }
+                return 0; // Movement locked
             }
-            else
+
+            if (IsMoving && !TouchingDirections.IsOnWall)
             {
-                // Movement locked
-                return 0;
+                return walkSpeed;
             }
         }
         else // AirState checks
@@ -44,11 +37,9 @@ public class playerController : MonoBehaviour
             {
                 return airWalkSpeed;
             }
-            else
-            {
-                return airWalkSpeed; // Return airWalkSpeed as the default value
-            }
         }
+
+        return airWalkSpeed; // Default value for air state
     }
 }
 
