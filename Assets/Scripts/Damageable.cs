@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Damageable : MonoBehaviour
 {
+    public UnityEvent<int, Vector2> damageableHit;
+    public UnityEvent<int, int> healthChanged;
     Animator animator;
 
     [SerializeField]
@@ -32,6 +35,7 @@ public class Damageable : MonoBehaviour
         set
         {
             _health = value;
+            healthChanged?.Invoke(_health, MaxHealth);
 
             //if health drops below 0, they die
             if(_health <= 0)
@@ -42,10 +46,11 @@ public class Damageable : MonoBehaviour
     }
 
     [SerializeField]
-    private bool _isAlive = true;
+    public bool _isAlive = true;
 
     [SerializeField]
     private bool isInvincible = false;
+
     private float timeSinceHit = 0;
     public float invincibilityTime = 0.25f;
 
@@ -61,6 +66,18 @@ public class Damageable : MonoBehaviour
             Debug.Log("IsAlive: " + value);
         }
         
+    }
+
+    public bool LockVelocity 
+    { 
+        get 
+        {
+        return animator.GetBool(AnimationStrings.lockVelocity);
+        }
+        set
+        {
+        animator.SetBool(AnimationStrings.lockVelocity, value);
+        }
     }
 
     private void Awake()
@@ -81,12 +98,13 @@ public class Damageable : MonoBehaviour
 
             timeSinceHit += Time.deltaTime;
         }
-        Hit(10);  
+        //Test for death anim
+        //Hit(10);  
 
         
     }   
 
-   public bool Hit(int damage)
+   public bool Hit(int damage, Vector2 knockback)
     {
         if(IsAlive && !isInvincible)
         {
@@ -94,10 +112,10 @@ public class Damageable : MonoBehaviour
             isInvincible = true;
 
             // Notify other subscribed components that the damageable was hit to handle the knockback and such
-            //animator.SetTrigger(AnimationStrings.hitTrigger);
-            //LockVelocity = true;
-            //damageableHit?.Invoke(damage, knockback);
-           // CharacterEvents.characterDamaged.Invoke(gameObject, damage);
+            animator.SetTrigger(AnimationStrings.hitTrigger);
+            LockVelocity = true;
+            damageableHit?.Invoke(damage, knockback);
+           CharacterEvents.characterDamaged.Invoke(gameObject, damage);
 
             return true;
         }
@@ -105,4 +123,21 @@ public class Damageable : MonoBehaviour
         // Unable to be hit
         return false;
     }
+    
+    // Returns whether the character was healed or not
+    public bool Heal(int healthRestore)
+    {
+        if(IsAlive && Health < MaxHealth)
+        {
+            int maxHeal = Mathf.Max(MaxHealth - Health, 0);
+            int actualHeal = Mathf.Min(maxHeal, healthRestore);
+            Health += actualHeal;
+            CharacterEvents.characterHealed(gameObject, actualHeal);
+            return true;
+        }
+
+        return false;
+    }
+
 }
+

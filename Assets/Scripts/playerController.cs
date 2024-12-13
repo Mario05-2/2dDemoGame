@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(touchingDirections))]
+[RequireComponent(typeof(Rigidbody2D), typeof(touchingDirections), typeof(Damageable))]
 public class playerController : MonoBehaviour
 {
     public float walkSpeed = 5f;
@@ -13,8 +13,8 @@ public class playerController : MonoBehaviour
     public float airWalkSpeed = 3f;
     public float jumpImpulse = 10f;
     touchingDirections TouchingDirections;
-
     //movement stops when hitting the wall
+    Damageable damageable;
     public float CurrentMoveSpeed
 {
     get
@@ -94,11 +94,19 @@ public class playerController : MonoBehaviour
     Rigidbody2D rb;
     Animator animator; 
 
+    public bool IsAlive {
+        get
+        {
+        return animator.GetBool(AnimationStrings.isAlive);
+        }
+    }
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         TouchingDirections = GetComponent<touchingDirections>();
+        damageable = GetComponent<Damageable>();
     }
     // Start is called before the first frame update
     void Start()
@@ -115,7 +123,9 @@ public class playerController : MonoBehaviour
     private void FixedUpdate()
     {
         //Debug.Log($"Move Input: {moveInput}, Velocity: {new Vector2(moveInput.x * walkSpeed, rb.velocity.y)}");
-        rb.velocity = new Vector2(moveInput.x * walkSpeed, rb.velocity.y);
+        //changed from walkSpeed to CurrentMoveSpeed (make sure this doesn't break anything)
+        if(!damageable.LockVelocity)
+            rb.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.velocity.y);
         //* Time.fixedDeltaTime
 
         animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
@@ -125,11 +135,20 @@ public class playerController : MonoBehaviour
     {
         moveInput = context.ReadValue<Vector2>();
 
-        IsMoving = moveInput != Vector2.zero;
+        if(IsAlive)
+        {
+              IsMoving = moveInput != Vector2.zero;
         //Debug.Log($"OnMove called. Move Input: {moveInput}, IsMoving: {IsMoving}");
-
-        SetFacingDirection(moveInput);
+    
+            SetFacingDirection(moveInput);
+        }
+        else
+        {
+              IsMoving = false;
+        } 
+          
     }
+        
 
     private void SetFacingDirection(Vector2 moveInput)
     {
@@ -161,6 +180,11 @@ public class playerController : MonoBehaviour
            animator.SetTrigger("attack");
            Debug.Log("Attack!");
         }
+    }
+
+    public void OnHit(int damage, Vector2 knockback)
+    {
+        rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
     }
 
     /*public void OnRun(InputAction.CallbackContext context)
