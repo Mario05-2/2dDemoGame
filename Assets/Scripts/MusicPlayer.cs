@@ -12,6 +12,6 @@ public class MusicPlayer : MonoBehaviour
     {
         introSource.Play();
 
-        //loopSource.PlayScheduled(AudioSettings.dspTime + introSource.clip.length);
+        loopSource.PlayScheduled(AudioSettings.dspTime + introSource.clip.length);
     }
 }
